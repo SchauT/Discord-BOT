@@ -66,8 +66,8 @@ async def ban(ctx, target, reason=""):
     await ctx.send(f"{member.mention} has been banned for {reason}")
 
 
-FLOOD_MAP = []
-MAX_FLOOD = {5, 1}
+FLOOD_MAP = dict()
+MAX_FLOOD = [5, 1]
 
 
 @bot.command("flood")
@@ -78,30 +78,23 @@ async def flood(ctx, x=5, y=1):
         return
     if FLOOD_MAP:
         await ctx.send('You can spam boys')
-        FLOOD_MAP = []
+        FLOOD_MAP = dict()
     else:
         await ctx.send('Attention, représailles si un malandrin flood le serveur')
-        MAX_FLOOD = {x, y}
-        FLOOD_MAP.append({ctx.author.name: [time.time()]})
+        MAX_FLOOD = [x, y]
+        FLOOD_MAP = {ctx.author.id: [time.time()]}
         print('FLOOD_MAP', FLOOD_MAP)
 
 
 @bot.event
 async def on_message(message):
-    # global FLOOD_MAP
-    # print('FLOOD_MAP', FLOOD_MAP)
-    # if FLOOD_MAP:
-    #     print('FLOOD_MAP', FLOOD_MAP)
-    #     if message.author.id in FLOOD_MAP:
-    #         userId = FLOOD_MAP[message.author.id]
-    #         print('userId', userId)
-    #         print(FLOOD_MAP[0][message.author.id])
-    #         if len(FLOOD_MAP[0][message.author.id]) >= MAX_FLOOD[0]:
-    #             if FLOOD_MAP[0][message.author.id][-1] - FLOOD_MAP[0][message.author.id][0] <= MAX_FLOOD[1] * 60:
-    #                 await message.channel.send(f"Be calm {message.author.mention}, or you'll get the spanky spanky")
-    #         FLOOD_MAP[0][message.author.id].append(time.time())
-    #     else:
-    #         FLOOD_MAP[str(ctx.author.name)]: [time.time()]
+    global FLOOD_MAP
+    print('FLOOD_MAP', FLOOD_MAP)
+    if FLOOD_MAP:
+        if len(FLOOD_MAP[message.author.id]) >= MAX_FLOOD[0]:
+            if FLOOD_MAP[message.author.id][-1] - FLOOD_MAP[message.author.id][0] <= MAX_FLOOD[1] * 60:
+                await message.channel.send(f"Be calm {message.author.mention}, or you'll get the spanky spanky")
+        FLOOD_MAP[message.author.id].append(time.time())
 
     if message.content == "Salut tout le monde":
         await message.channel.send("Salut tout seul")
