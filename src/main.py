@@ -126,5 +126,5 @@ async def poll(ctx, question=""):
     await message.add_reaction('👎')
 
 
-token = "MTE2Njc4NTgwNTUzNzI1NTUwNQ.GEAONS.vQBdSZ8mZP_eJjdmdCttExfHM0screIHx0WgvQ"
+token = ""
 bot.run(token)  # Starts the bot
