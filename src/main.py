@@ -88,20 +88,20 @@ async def flood(ctx, x=5, y=1):
 
 @bot.event
 async def on_message(message):
-    global FLOOD_MAP
-    print('FLOOD_MAP', FLOOD_MAP)
-    if FLOOD_MAP:
-        print('FLOOD_MAP', FLOOD_MAP)
-        if message.author.id in FLOOD_MAP:
-            userId = FLOOD_MAP[message.author.id]
-            print('userId', userId)
-        #     print(FLOOD_MAP[0][message.author.id])
-        #     if len(FLOOD_MAP[0][message.author.id]) >= MAX_FLOOD[0]:
-        #         if FLOOD_MAP[0][message.author.id][-1] - FLOOD_MAP[0][message.author.id][0] <= MAX_FLOOD[1] * 60:
-        #             await message.channel.send(f"Be calm {message.author.mention}, or you'll get the spanky spanky")
-        #     FLOOD_MAP[0][message.author.id].append(time.time())
-        # else:
-        #     FLOOD_MAP[str(ctx.author.name)]: [time.time()]
+    # global FLOOD_MAP
+    # print('FLOOD_MAP', FLOOD_MAP)
+    # if FLOOD_MAP:
+    #     print('FLOOD_MAP', FLOOD_MAP)
+    #     if message.author.id in FLOOD_MAP:
+    #         userId = FLOOD_MAP[message.author.id]
+    #         print('userId', userId)
+    #         print(FLOOD_MAP[0][message.author.id])
+    #         if len(FLOOD_MAP[0][message.author.id]) >= MAX_FLOOD[0]:
+    #             if FLOOD_MAP[0][message.author.id][-1] - FLOOD_MAP[0][message.author.id][0] <= MAX_FLOOD[1] * 60:
+    #                 await message.channel.send(f"Be calm {message.author.mention}, or you'll get the spanky spanky")
+    #         FLOOD_MAP[0][message.author.id].append(time.time())
+    #     else:
+    #         FLOOD_MAP[str(ctx.author.name)]: [time.time()]
 
     if message.content == "Salut tout le monde":
         await message.channel.send("Salut tout seul")
@@ -115,6 +115,16 @@ async def xkcd(ctx):
     await ctx.send("https://xkcd.com/" + str(random.randint(1, 2000)))
 
 
+@bot.command("poll")
+async def poll(ctx, question=""):
+    if question == "":
+        await ctx.send("Please enter a question")
+        return
+    await ctx.send("@here " + question)
+    message = await ctx.send(question)
+    await message.add_reaction('👍')
+    await message.add_reaction('👎')
 
-token = "MTE2Njc4NTgwNTUzNzI1NTUwNQ.GWqhkd.3HPDU87jUM507Jk3QJirIjvZdHaaaA4gBmc22g"
+
+token = "MTE2Njc4NTgwNTUzNzI1NTUwNQ.GEAONS.vQBdSZ8mZP_eJjdmdCttExfHM0screIHx0WgvQ"
 bot.run(token)  # Starts the bot
