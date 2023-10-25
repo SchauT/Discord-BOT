@@ -66,7 +66,7 @@ async def ban(ctx, target, reason=""):
     await ctx.send(f"{member.mention} has been banned for {reason}")
 
 
-FLOOD_MAP = {}
+FLOOD_MAP = []
 MAX_FLOOD = {5, 1}
 
 
@@ -78,11 +78,11 @@ async def flood(ctx, x=5, y=1):
         return
     if FLOOD_MAP:
         await ctx.send('You can spam boys')
-        FLOOD_MAP = {}
+        FLOOD_MAP = []
     else:
         await ctx.send('Attention, représailles si un malandrin flood le serveur')
         MAX_FLOOD = {x, y}
-        FLOOD_MAP[ctx.author.name]: [time.time()]
+        FLOOD_MAP.append({ctx.author.name: [time.time()]})
         print('FLOOD_MAP', FLOOD_MAP)
 
 
