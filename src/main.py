@@ -90,10 +90,13 @@ async def flood(ctx, x=5, y=1):
 async def on_message(message):
     global FLOOD_MAP
     print('FLOOD_MAP', FLOOD_MAP)
+    if message.author == bot.user:
+        return
     if FLOOD_MAP:
         if len(FLOOD_MAP[message.author.id]) >= MAX_FLOOD[0]:
             if FLOOD_MAP[message.author.id][-1] - FLOOD_MAP[message.author.id][0] <= MAX_FLOOD[1] * 60:
                 await message.channel.send(f"Be calm {message.author.mention}, or you'll get the spanky spanky")
+                FLOOD_MAP[message.author.id] = []
         FLOOD_MAP[message.author.id].append(time.time())
 
     if message.content == "Salut tout le monde":
